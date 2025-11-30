@@ -1,0 +1,213 @@
+/* RESULTS PAGE --------------------------- */
+
+.results-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.trip-title {
+    font-size: 26px;
+    margin: 0;
+}
+
+.trip-subtitle {
+    margin: 4px 0 0 0;
+    color: #6b7280;
+}
+
+.budget-box {
+    background: #f7f9ff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    font-size: 14px;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+/* GRID */
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    border: 1px solid #f1f1f1;
+    transition: 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.card-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 14px;
+}
+
+.muted {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 6px 0 0;
+}
+
+/* ITINERARY SMALL CARD */
+.small-card {
+    background: #fafcff;
+    border: 1px solid #edf1ff;
+}
+
+.day-label {
+    font-weight: 700;
+    color: #4c7cf8;
+    margin-bottom: 4px;
+}
+
+.tag {
+    display: inline-block;
+    margin-top: 10px;
+    background: #eef3ff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #3c60d3;
+    font-weight: 600;
+}
+
+/* HERO SECTION ---------------------------- */
+.hero {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #cc779a, #c15de2);
+  border-bottom: 1px solid #e065d6;
+}
+
+.hero-inner {
+  max-width: 980px;
+  margin: auto;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.hero-subtext {
+  font-size: 16px;
+  color: #6b7280;
+  max-width: 620px;
+  margin: 0 auto 30px;
+}
+
+/* SEARCH CARD ---------------------------- */
+.search-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  border: 1px solid #f1f1f1;
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.small-field {
+  flex: 0.5;
+}
+
+.button-field {
+  flex: 0.5;
+  display: flex;
+  align-items: flex-end;
+}
+
+.search-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.search-field input,
+.search-field select {
+  padding: 12px 14px;
+  font-size: 14px;
+  background: #ffffff;
+  border: 1px solid #dfe3eb;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+  border-color: #4c7cf8;
+  box-shadow: 0 0 0 3px rgba(76,124,248,0.15);
+  outline: none;
+}
+
+/* BUTTON --------------------------------- */
+.search-btn {
+  width: 100%;
+  padding: 13px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #4c7cf8, #8e5cff);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 12px rgba(76,124,248,0.25);
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76,124,248,0.35);
+}
+
+/* RESPONSIVE -------------------------------- */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 30px;
+  }
+  .search-card {
+    padding: 18px;
+  }
+}
