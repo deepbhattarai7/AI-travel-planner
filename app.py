@@ -99,7 +99,5 @@ def health():
     return {"status": "ok"}
 
 
-if __name__ == "__main__":
-    # Use debug=False for production. When developing, set DEBUG env var or run via Flask CLI.
-    debug_mode = os.getenv("FLASK_DEBUG", "0") in ("1", "true", "True")
-    app.run(debug=debug_mode, host="127.0.0.1", port=int(os.getenv("PORT", 5000)))
+
+
