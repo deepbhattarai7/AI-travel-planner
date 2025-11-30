@@ -1,0 +1,81 @@
+<section class="results-container">
+
+  <!-- Trip Header -->
+  <div class="results-header">
+    <div>
+      <h2 class="trip-title">Trip to {{ result.destination }}</h2>
+      <p class="trip-subtitle">{{ result.dates }} • Mood: {{ result.mood }}</p>
+    </div>
+
+    <div class="budget-box">
+      <div><strong>Total:</strong> ₹{{ result.budget_info.total_budget }}</div>
+      <div><strong>Per Day:</strong> ₹{{ result.budget_info.per_day }}</div>
+    </div>
+  </div>
+
+  <!-- Trending Places -->
+  {% if result.trends %}
+  <h3 class="section-title">Trending Places</h3>
+  <div class="grid-cards">
+    {% for t in result.trends %}
+    <div class="card">
+      {% if t.image %}
+      <img src="{{ t.image }}" alt="{{ t.name }}" class="card-img">
+      {% endif %}
+      <div class="card-body">
+        <h4>{{ t.name }}</h4>
+        <p class="muted">{{ t.desc }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Itinerary -->
+  <h3 class="section-title">Itinerary</h3>
+  <div class="grid-cards">
+    {% for d in result.itinerary %}
+    <div class="card small-card">
+      <div class="card-body">
+        <div class="day-label">Day {{ d.day }}</div>
+        <h4>{{ d.summary }}</h4>
+        <p class="muted">Places: {{ d.places | join(', ') }}</p>
+        <div class="tag">Est. ₹{{ d.est_cost }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Hotels -->
+  <h3 class="section-title">Hotels</h3>
+  <div class="grid-cards">
+    {% for h in result.hotels %}
+    <div class="card">
+      {% if h.image %}
+      <img src="{{ h.image }}" alt="{{ h.name }}" class="card-img">
+      {% endif %}
+      <div class="card-body">
+        <h4>{{ h.name }}</h4>
+        <p class="muted">Price: {{ h.price_per_night }} • Rating: ⭐ {{ h.rating }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Food -->
+  <h3 class="section-title">Food & Cafés</h3>
+  <div class="grid-cards">
+    {% for f in result.foods %}
+    <div class="card">
+      {% if f.image %}
+      <img src="{{ f.image }}" alt="{{ f.name }}" class="card-img">
+      {% endif %}
+      <div class="card-body">
+        <h4>{{ f.name }}</h4>
+        <p class="muted">{{ f.type }} • {{ f.price }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</section>

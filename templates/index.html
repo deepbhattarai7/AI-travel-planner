@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <h1 class="hero-title">Plan Your Perfect Trip</h1>
+    <p class="hero-subtext">
+      Smart AI-powered itineraries, trending places, hotels & food recommendations.
+    </p>
+
+    <!-- SEARCH CARD -->
+    <form method="POST" class="search-card">
+
+      <div class="search-row">
+
+        <!-- Destination -->
+        <div class="search-field">
+          <label>Destination</label>
+          <input type="text" name="destination" placeholder="Jaipur, India" required>
+        </div>
+
+        <!-- Date range -->
+        <div class="search-field">
+          <label>Date Range</label>
+          <input type="text" id="dateRange" name="dates" placeholder="Select dates" required>
+        </div>
+
+        <!-- Budget -->
+        <div class="search-field small-field">
+          <label>Budget (INR)</label>
+          <input type="number" name="budget" placeholder="30000" required>
+        </div>
+
+        <!-- Mood -->
+        <div class="search-field small-field">
+          <label>Mood</label>
+          <select name="mood" required>
+            <option value="adventure">Adventure</option>
+            <option value="relax">Relax</option>
+            <option value="nightlife">Nightlife</option>
+            <option value="culture">Culture</option>
+          </select>
+        </div>
+
+        <!-- Button -->
+        <div class="search-field button-field">
+          <button class="search-btn" type="submit">Search Trips</button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
+<script>
+  flatpickr("#dateRange", {
+    mode: "range",
+    dateFormat: "Y-m-d",
+    allowInput: true
+  });
+</script>
+{% if result %}
+  {% include 'results.html' %}
+{% endif %}
+
+{% endblock %}
