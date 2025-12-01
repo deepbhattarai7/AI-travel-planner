@@ -28,22 +28,23 @@ def unsplash_search(query, per_page=6):
     data = r.json()
     return [item["urls"]["regular"] for item in data.get("results", [])]
 
-
 def call_gemini_text(prompt, max_tokens=400):
     if not GEMINI_KEY:
         raise RuntimeError("GEMINI_API_KEY is not set")
 
     try:
-        # NEW Gemini SDK (correct)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        # IMPORTANT: Force raw JSON output
+        model = genai.GenerativeModel(
+            "gemini-2.5-flash",
+            generation_config={
+                "response_mime_type": "application/json"
+            }
+        )
+
         response = model.generate_content(prompt)
 
-        # response.text gives the output
+        # The response is EXACT JSON now
         text = response.text.strip()
-
-        # sometimes Gemini returns code blocks or markdown
-        text = text.replace("```json", "").replace("```", "").strip()
-
         return text
 
     except Exception as e:
@@ -219,3 +220,4 @@ class FoodFinderAgent:
                 f['image'] = None
 
         return foods
+
