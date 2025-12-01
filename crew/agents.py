@@ -3,7 +3,7 @@ import json
 import requests
 
 # Gemini (google-generativeai)
-GEMINI_KEY ='AIzaSyBx_Zmwc2rPvwNCcodIgvgz8jyAL3OwHQQ'
+GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_KEY:
     try:
         import google.generativeai as genai
@@ -13,7 +13,7 @@ if GEMINI_KEY:
         print("Warning: google.generativeai import failed:", e)
 
 # Unsplash
-UNSPLASH_KEY = 'mMtGiYOvRm4MaAk19vgiSVgVI4eX-nanBCfPNYEyO3o'
+UNSPLASH_KEY = os.getenv("UNSPLASH_ACCESS_KEY")
 UNSPLASH_API_URL = "https://api.unsplash.com/search/photos"
 
 
@@ -220,4 +220,5 @@ class FoodFinderAgent:
                 f['image'] = None
 
         return foods
+
 
