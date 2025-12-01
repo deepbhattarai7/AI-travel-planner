@@ -1,43 +1,36 @@
-# app.py — Full Flask 3.x compatible entrypoint for Mood & Budget Travel Planner
+# app.py — Render-ready entrypoint (no hardcoded keys)
 import os
+import logging
 import traceback
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
 
-# Import orchestration helpers from crew package
+# load .env locally (does nothing on Render)
+load_dotenv()
+
+# import orchestration helpers
 from crew.crew_runner import run_travel_crew, check_required_env
 
-# Load environment variables from .env (if present)
-import os
+# logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("travel-app")
 
-# DIRECT API KEYS HERE
-os.environ["GEMINI_API_KEY"] = "AIzaSyBx_Zmwc2rPvwNCcodIgvgz8jyAL3OwHQQ"
-os.environ["UNSPLASH_ACCESS_KEY"] = "mMtGiYOvRm4MaAk19vgiSVgVI4eX-nanBCfPNYEyO3o"
-os.environ["SECRET_KEY"] = "supersecret123ysjjjsgggshsh"
-
-
-app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", "dev-secret")  # keep a secure SECRET_KEY in production
+app = Flask(__name__, static_folder="static", template_folder="templates")
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret")  # set SECRET_KEY in env for production
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     """
     Main page: shows form and (after POST) the generated travel plan.
-    This implementation checks required env keys on each request (works across Flask versions).
+    Checks required env keys on each request and shows friendly message if missing.
     """
-    # 1) Ensure required env keys exist
+    # check required environment variables
     missing = check_required_env()
     if missing:
-        # Render index with a clear message about missing environment variables
-        return render_template(
-            "index.html",
-            missing=missing,
-            result=None,
-            example=None,
-            error=None
-        )
+        return render_template("index.html", missing=missing, result=None, example=None, error=None)
 
-    # Example placeholders shown in the form
+    # example placeholders
     example = {
         "destination": "Jaipur, India",
         "dates": "2025-12-10 to 2025-12-15",
@@ -49,9 +42,8 @@ def index():
     error = None
 
     if request.method == "POST":
-        # 2) Read and validate form inputs
         destination = (request.form.get("destination") or "").strip()
-        dates = request.form.get("dates")
+        dates = (request.form.get("dates") or "").strip()
         budget = (request.form.get("budget") or "").strip()
         mood = (request.form.get("mood") or "").strip()
 
@@ -66,38 +58,18 @@ def index():
             "mood": mood,
         }
 
-        # 3) Run the multi-agent crew and catch runtime issues
         try:
-            print("\n--- USER INPUT ---")
-            print(user_input)
-
-            try:
-                result = run_travel_crew(user_input)
-                print("\n--- CREW RESULT ---")
-                print(result)
-            except Exception as e:
-                print("\n--- CREW ERROR ---")
-                print(e)
-                import traceback
-                traceback.print_exc()
-                result = None
-                error = str(e)
-
+            logger.info("Running travel crew for: %s", user_input)
+            result = run_travel_crew(user_input)
+            logger.info("Crew finished successfully.")
         except Exception as e:
-            # Log traceback to console for debugging; present a friendly error to user
-            traceback.print_exc()
-            error = f"Failed to generate plan: {str(e)}"
-            return render_template("index.html", missing=[], result=None, example=example, error=error)
+            logger.exception("Crew error")
+            error = str(e)
+            result = None
 
-    # 4) Render page with results (or form if GET)
     return render_template("index.html", missing=[], result=result, example=example, error=error)
 
 
 @app.route("/healthz", methods=["GET"])
 def health():
-    """Simple health check endpoint for Render / monitoring."""
     return {"status": "ok"}
-
-
-
-
